@@ -18,13 +18,12 @@ class CheckoutRepoImpl implements CheckoutRepo {
     required PaymentIntentInputModel paymentIntentInput,
   }) async {
     try {
-      await stripeService.makePayment(paymentIntentInput);
+      await stripeService.makePayment(
+        paymentIntentInputModel: paymentIntentInput,
+      );
       return Right(null);
     } catch (e) {
       return Left(ServerFailure(errMessage: e.toString()));
     }
   }
-
-
-
 }
