@@ -1,7 +1,7 @@
-import 'package:gateway_payments_app/features/checkout/data/models/payment_intent_model/amount_details.dart';
-import 'package:gateway_payments_app/features/checkout/data/models/payment_intent_model/automatic_payment_methods.dart';
-import 'package:gateway_payments_app/features/checkout/data/models/payment_intent_model/metadata.dart';
-import 'package:gateway_payments_app/features/checkout/data/models/payment_intent_model/payment_method_options.dart';
+import 'amount_details.dart';
+import 'automatic_payment_methods.dart';
+import 'metadata.dart';
+import 'payment_method_options.dart';
 
 class PaymentIntentModel {
   String? id;

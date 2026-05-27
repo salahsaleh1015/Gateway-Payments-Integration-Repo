@@ -12,10 +12,14 @@ class StripeCubit extends Cubit<StripeStates> {
   Future makePayment({
     required PaymentIntentInputModel paymentIntentInput,
   }) async {
+    emit(StripeLoadingState());
     var data = await checkoutRepo.makePayment(
       paymentIntentInput: paymentIntentInput,
     );
-    data.fold((l)=>emit(StripeFailureState(errorMsg: l.errMessage)), (r)=>emit(StripeSuccessState()));
+    data.fold(
+      (l) => emit(StripeFailureState(errorMsg: l.errMessage)),
+      (r) => emit(StripeSuccessState()),
+    );
   }
 
   @override

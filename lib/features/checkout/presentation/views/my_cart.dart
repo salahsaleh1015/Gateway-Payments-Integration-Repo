@@ -24,21 +24,4 @@ class MyCartView extends StatelessWidget {
 // presentPaymentSheet
 
 
-// Future<void> initPaymentSheet() async {
-//   try {
-//
-//     // 3. Initialize the payment sheet
-//     await Stripe.instance.initPaymentSheet(
-//       paymentSheetParameters: SetupPaymentSheetParameters(
-//         // Main params
-//         paymentIntentClientSecret: data['paymentIntent'],
-//         merchantDisplayName: 'Flutter Stripe Store Demo',
-//
-//       ) );
-//   } catch (e) {
-//     ScaffoldMessenger.of(context).showSnackBar(
-//       SnackBar(content: Text('Error: $e')),
-//     );
-//     rethrow;
-//   }
-// }
+

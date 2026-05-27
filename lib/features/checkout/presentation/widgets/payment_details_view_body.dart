@@ -23,7 +23,9 @@ class _PaymentDetailsViewBodyState extends State<PaymentDetailsViewBody> {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
-          child: PaymentMethodsListView(updatePaymentMethod: ({required int index}) {}),
+          child: PaymentMethodsListView(
+            //updatePaymentMethod: ({required int index}) {}
+          ),
         ),
         SliverToBoxAdapter(
           child: CustomCreditCard(
@@ -34,26 +36,30 @@ class _PaymentDetailsViewBodyState extends State<PaymentDetailsViewBody> {
         SliverFillRemaining(
           hasScrollBody: false,
           child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 12, left: 16, right: 16),
-                child: CustomButton(
-                  onTap: () {
-                    if (formKey.currentState!.validate()) {
-                      formKey.currentState!.save();
-                      log('payment');
-                    } else {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return const ThankYouView();
-                      }));
-                      autoValidateMode = AutovalidateMode.always;
-                      setState(() {});
-                    }
-                  },
-                  text: 'Payment',
-                ),
-              )),
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 12, left: 16, right: 16),
+              child: CustomButton(
+                onTap: () {
+                  if (formKey.currentState!.validate()) {
+                    formKey.currentState!.save();
+                    log('payment');
+                  } else {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const ThankYouView();
+                        },
+                      ),
+                    );
+                    autoValidateMode = AutovalidateMode.always;
+                    setState(() {});
+                  }
+                },
+                text: 'Payment',
+              ),
+            ),
+          ),
         ),
       ],
     );
