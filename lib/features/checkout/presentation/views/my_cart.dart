@@ -16,12 +16,10 @@ class MyCartView extends StatelessWidget {
   }
 }
 
-
-// PaymentSheetObject create payment Intent(amount,currency)
-
-// initialize Payment Sheet (PaymentIntentClientSecret)
-
-// presentPaymentSheet
+// PaymentIntentModel create payment intent(amount , currency , customerId)
+// keySecret createEphemeralKey( customerId)
+// initPaymentSheet (merchantDisplayName , intentClientSecret , ephemeralKeySecret)
+// presentPaymentSheet()
 
 
 
