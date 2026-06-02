@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gateway_payments_app/features/checkout/data/models/payment_intent_input_model.dart';
+import 'package:gateway_payments_app/features/checkout/data/models/stripe_models/payment_intent_input_model.dart';
 import 'package:gateway_payments_app/features/checkout/data/repos/checkout_repo.dart';
 import 'package:gateway_payments_app/features/checkout/presentation/managers/stripe_state.dart';
 

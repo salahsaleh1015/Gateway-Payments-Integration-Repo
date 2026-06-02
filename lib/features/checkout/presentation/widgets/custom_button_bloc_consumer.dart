@@ -5,7 +5,7 @@ import 'package:gateway_payments_app/features/checkout/presentation/managers/str
 import 'package:gateway_payments_app/features/checkout/presentation/views/thank_you_view.dart';
 import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
 import '../../../../core/widgets/custom_button.dart';
-import '../../data/models/payment_intent_input_model.dart';
+import '../../data/models/stripe_models/payment_intent_input_model.dart';
 
 class CustomButtonBlocConsumer extends StatelessWidget {
   const CustomButtonBlocConsumer({super.key});

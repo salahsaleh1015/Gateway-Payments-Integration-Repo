@@ -1,6 +1,6 @@
 
 
-import 'package:gateway_payments_app/features/checkout/data/models/payment_intent_model/tip.dart';
+import 'package:gateway_payments_app/features/checkout/data/models/stripe_models/payment_intent_model/tip.dart';
 
 class AmountDetails {
   Tip? tip;

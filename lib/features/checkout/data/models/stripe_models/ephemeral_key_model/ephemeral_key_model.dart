@@ -1,4 +1,5 @@
-import 'package:gateway_payments_app/features/checkout/data/models/ephemeral_key_model/associated_object.dart';
+
+import 'package:gateway_payments_app/features/checkout/data/models/stripe_models/ephemeral_key_model/associated_object.dart';
 
 class EphemeralKeyModel {
   String? id;

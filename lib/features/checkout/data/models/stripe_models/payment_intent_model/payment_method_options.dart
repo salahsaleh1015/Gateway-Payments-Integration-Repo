@@ -1,6 +1,9 @@
 
 
-import 'package:gateway_payments_app/features/checkout/data/models/payment_intent_model/card.dart';
+
+
+
+import 'package:gateway_payments_app/features/checkout/data/models/stripe_models/payment_intent_model/card.dart';
 
 class PaymentMethodOptions {
   Card? card;
