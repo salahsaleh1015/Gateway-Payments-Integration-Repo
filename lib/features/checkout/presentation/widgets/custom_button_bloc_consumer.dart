@@ -11,6 +11,7 @@ import '../../../../core/widgets/custom_button.dart';
 import '../../data/models/paypal_models/item_list_model/item.dart';
 import '../../data/models/paypal_models/item_list_model/item_list_model.dart';
 import '../../data/models/stripe_models/payment_intent_input_model.dart';
+import '../views/my_cart.dart';
 
 class CustomButtonBlocConsumer extends StatelessWidget {
   const CustomButtonBlocConsumer({super.key, required this.isPaypal});
@@ -86,11 +87,33 @@ class CustomButtonBlocConsumer extends StatelessWidget {
               note: "Contact us for any questions on your order.",
               onSuccess: (Map params) async {
                 print("onSuccess: $params");
-                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return const ThankYouView();
+                  }),
+                      (route) {
+                    if (route.settings.name == '/') {
+                      return true;
+                    } else {
+                      return false;
+                    }
+                  },
+                );
               },
               onError: (error) {
                 print("onError: $error");
-                Navigator.pop(context);
+                SnackBar snackBar = SnackBar(content: Text(error.toString()));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return const MyCartView();
+                  }),
+                      (route) {
+                    return false;
+                  },
+                );
               },
               onCancel: () {
                 print('cancelled:');
