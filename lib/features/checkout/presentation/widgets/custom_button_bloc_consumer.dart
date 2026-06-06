@@ -13,7 +13,10 @@ import '../../data/models/paypal_models/item_list_model/item_list_model.dart';
 import '../../data/models/stripe_models/payment_intent_input_model.dart';
 
 class CustomButtonBlocConsumer extends StatelessWidget {
-  const CustomButtonBlocConsumer({super.key});
+  const CustomButtonBlocConsumer({super.key, required this.isPaypal});
+
+  final bool isPaypal;
+
 
   @override
   Widget build(BuildContext context) {
@@ -39,16 +42,11 @@ class CustomButtonBlocConsumer extends StatelessWidget {
       builder: (context, state) {
         return CustomButton(
           onTap: () {
-            // PaymentIntentInputModel paymentIntentInputModel =
-            //     PaymentIntentInputModel(
-            //       customerId: 'cus_Uau9O0hpkePIZo',
-            //       amount: '100',
-            //       currency: 'USD',
-            //     );
-            // BlocProvider.of<StripeCubit>(
-            //   context,
-            // ).makePayment(paymentIntentInput: paymentIntentInputModel);
-            executePaypalPayment(context);
+            if (isPaypal) {
+              executePaypalPayment(context);
+            } else {
+              executeStripePayment(context);
+            }
           },
           isLoading: state is StripeLoadingState ? true : false,
           text: 'Continue',
@@ -57,8 +55,19 @@ class CustomButtonBlocConsumer extends StatelessWidget {
     );
   }
 
+  void executeStripePayment(BuildContext context) {
+    PaymentIntentInputModel paymentIntentInputModel = PaymentIntentInputModel(
+      customerId: 'cus_Uau9O0hpkePIZo',
+      amount: '100',
+      currency: 'USD',
+    );
+    BlocProvider.of<StripeCubit>(
+      context,
+    ).makePayment(paymentIntentInput: paymentIntentInputModel);
+  }
+
   void executePaypalPayment(BuildContext context) {
-      var transactionData = getTransactionData();
+    var transactionData = getTransactionData();
     Navigator.of(context).push(
       MaterialPageRoute(
         builder:
@@ -77,6 +86,7 @@ class CustomButtonBlocConsumer extends StatelessWidget {
               note: "Contact us for any questions on your order.",
               onSuccess: (Map params) async {
                 print("onSuccess: $params");
+                Navigator.pop(context);
               },
               onError: (error) {
                 print("onError: $error");

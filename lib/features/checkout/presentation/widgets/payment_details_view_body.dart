@@ -22,11 +22,11 @@ class _PaymentDetailsViewBodyState extends State<PaymentDetailsViewBody> {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        SliverToBoxAdapter(
-          child: PaymentMethodsListView(
-            //updatePaymentMethod: ({required int index}) {}
-          ),
-        ),
+        // SliverToBoxAdapter(
+        //   child: PaymentMethodsListView(
+        //     //updatePaymentMethod: ({required int index}) {}
+        //   ),
+        // ),
         SliverToBoxAdapter(
           child: CustomCreditCard(
             autovalidateMode: autoValidateMode,
