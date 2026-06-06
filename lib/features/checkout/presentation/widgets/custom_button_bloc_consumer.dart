@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gateway_payments_app/core/utils/app_keys.dart';
+import 'package:gateway_payments_app/features/checkout/data/models/paypal_models/amount_model/amount_model.dart';
+import 'package:gateway_payments_app/features/checkout/data/models/paypal_models/amount_model/details.dart';
 import 'package:gateway_payments_app/features/checkout/presentation/managers/stripe_cubit.dart';
 import 'package:gateway_payments_app/features/checkout/presentation/managers/stripe_state.dart';
 import 'package:gateway_payments_app/features/checkout/presentation/views/thank_you_view.dart';
 import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
 import '../../../../core/widgets/custom_button.dart';
+import '../../data/models/paypal_models/item_list_model/item.dart';
+import '../../data/models/paypal_models/item_list_model/item_list_model.dart';
 import '../../data/models/stripe_models/payment_intent_input_model.dart';
 
 class CustomButtonBlocConsumer extends StatelessWidget {
@@ -43,73 +48,62 @@ class CustomButtonBlocConsumer extends StatelessWidget {
             // BlocProvider.of<StripeCubit>(
             //   context,
             // ).makePayment(paymentIntentInput: paymentIntentInputModel);
-
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => PaypalCheckoutView(
-                sandboxMode: true,
-                clientId: "",
-                secretKey: "",
-                transactions: const [
-                  {
-                    "amount": {
-                      "total": '70',
-                      "currency": "USD",
-                      "details": {
-                        "subtotal": '70',
-                        "shipping": '0',
-                        "shipping_discount": 0
-                      }
-                    },
-                    "description": "The payment transaction description.",
-
-                    "item_list": {
-                      "items": [
-                        {
-                          "name": "Apple",
-                          "quantity": 4,
-                          "price": '5',
-                          "currency": "USD"
-                        },
-                        {
-                          "name": "Pineapple",
-                          "quantity": 5,
-                          "price": '10',
-                          "currency": "USD"
-                        }
-                      ],
-
-                      // shipping address is not required though
-                      //   "shipping_address": {
-                      //     "recipient_name": "tharwat",
-                      //     "line1": "Alexandria",
-                      //     "line2": "",
-                      //     "city": "Alexandria",
-                      //     "country_code": "EG",
-                      //     "postal_code": "21505",
-                      //     "phone": "+00000000",
-                      //     "state": "Alexandria"
-                      //  },
-                    }
-                  }
-                ],
-                note: "Contact us for any questions on your order.",
-                onSuccess: (Map params) async {
-                  print("onSuccess: $params");
-                },
-                onError: (error) {
-                  print("onError: $error");
-                  Navigator.pop(context);
-                },
-                onCancel: () {
-                  print('cancelled:');
-                },
-              ),
-            ));
+            executePaypalPayment(context);
           },
           isLoading: state is StripeLoadingState ? true : false,
           text: 'Continue',
         );
       },
     );
+  }
+
+  void executePaypalPayment(BuildContext context) {
+      var transactionData = getTransactionData();
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder:
+            (BuildContext context) => PaypalCheckoutView(
+              sandboxMode: true,
+              clientId: AppKeys.paypalClientId,
+              secretKey: AppKeys.paypalSecretKey,
+              transactions: [
+                {
+                  "amount": transactionData.amount.toJson(),
+                  "description": "The payment transaction description.",
+
+                  "item_list": transactionData.itemList.toJson(),
+                },
+              ],
+              note: "Contact us for any questions on your order.",
+              onSuccess: (Map params) async {
+                print("onSuccess: $params");
+              },
+              onError: (error) {
+                print("onError: $error");
+                Navigator.pop(context);
+              },
+              onCancel: () {
+                print('cancelled:');
+              },
+            ),
+      ),
+    );
+  }
+
+  ({AmountModel amount, ItemListModel itemList}) getTransactionData() {
+    var amount = AmountModel(
+      total: "100",
+      currency: 'USD',
+      details: Details(shipping: "0", shippingDiscount: 0, subtotal: '100'),
+    );
+
+    List<OrderItemModel> orders = [
+      OrderItemModel(currency: 'USD', name: 'Apple', price: "4", quantity: 10),
+      OrderItemModel(currency: 'USD', name: 'Apple', price: "5", quantity: 12),
+    ];
+
+    var itemList = ItemListModel(orders: orders);
+
+    return (amount: amount, itemList: itemList);
   }
 }
